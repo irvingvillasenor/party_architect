@@ -1,0 +1,4 @@
+@parties.map do |party|
+  render partial: "party.json.jb",
+  locals: { party: party }
+end

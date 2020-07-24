@@ -1,0 +1,11 @@
+{
+  id: vendor.id,
+  name: vendor.name,
+  category_id: vendor.category_id,
+  zip_code: vendor.zip_code,
+  user_id: vendor.user_id,
+  website_url: vendor.website_url,
+  image_url: vendor.image_url,
+  details: vendor.details,
+  price: vendor.price
+}

@@ -1,0 +1,7 @@
+{
+  id: party.id,
+  budget: party.budget,
+  occasion: party.occasion,
+  user_id: party.user_id,
+  # vendors: party.vendors
+}

@@ -1,0 +1,5 @@
+{
+  id: vendor_party.id,
+  party_id: vendor_party.party_id,
+  vendor_id: vendor_party.vendor_id
+}

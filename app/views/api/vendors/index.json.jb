@@ -1,0 +1,4 @@
+@vendors.map do |vendor|
+  render partial: "vendor.json.jb",
+  locals: { vendor: vendor}
+end

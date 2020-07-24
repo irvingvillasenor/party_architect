@@ -1,0 +1,6 @@
+category = render partial: "category.json.jb",
+locals: { category: @category}
+
+category[:vendors] = @category.vendors.map do |vendor|
+  render partial: "api/vendors/vendor.json.jb", locals: {vendor: vendor}
+end

@@ -1,0 +1,11 @@
+user = render partial: "user.json.jb",
+locals: { user: @user}
+
+user[:parties] = @user.parties.map do |party|
+  render partial: "api/parties/party.json.jb", locals: {party: party}
+end
+# User show displaying associated vendors
+# user[:vendors] = @user.vendors.map do |vendor|
+#   render partial: "api/vendors/vendor.json.jb", locals: {vendor: vendor}
+# end
+user
