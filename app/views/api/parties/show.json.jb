@@ -4,4 +4,16 @@ locals: { party: @party}
 party[:vendors] = @party.vendors.map do |vendor|
   render partial: "api/vendors/vendor.json.jb", locals: {vendor: vendor}
 end
+party[:user_parties] = current_user.parties.map do |party|
+  render partial: "api/parties/party.json.jb", locals: {party: party}
+end
+
+party[:vendor_parties] = @party.vendor_parties.map do |vendor_party|
+  render partial: "api/vendor_parties/vendor_party.json.jb", locals: {vendor_party: vendor_party}
+end
+
+# vendor_party = render partial: "vendor_party.json.jb",
+# locals: { vendor_party: @vendor_party}
+
+# vendor_party
 party

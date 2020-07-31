@@ -12,10 +12,13 @@ class Api::UsersController < ApplicationController
   end
 
   def create
+    response = Cloudinary::Uploader.upload(params[:image_file])
+    cloudinary_url = response["secure_url"]
     @user = User.new(
       first_name: params[:first_name],
       last_name: params[:last_name],
       email: params[:email],
+      image_url: cloudinary_url,
       vendor: params[:vendor],
       password: params[:password],
       password_confirmation: params[:password_confirmation]
@@ -33,9 +36,15 @@ class Api::UsersController < ApplicationController
       @user = current_user
       @user.first_name = params[:first_name] || @user.first_name
       @user.last_name = params[:last_name] || @user.last_name
+      # @user.image_url = params[:image_url] || @user.image_url
       @user.email = params[:email] || @user.email
       @user.password = params[:password] || @user.password
       @user.vendor = params[:vendor] || @user.vendor
+
+      response = Cloudinary::Uploader.upload(params[:image_url])
+      cloudinary_url = response["secure_url"]
+      @user.image_url = cloudinary_url || @user.image_url
+
       if @user.save
         render "show.json.jb"
       else

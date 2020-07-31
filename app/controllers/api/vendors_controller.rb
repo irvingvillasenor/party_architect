@@ -15,45 +15,57 @@ class Api::VendorsController < ApplicationController
   end
 
   def create
-    @vendor = Vendor.new(
-      name: params[:name],
-      category_id: params[:category_id],
-      zip_code: params[:zip_code],
-      user_id: current_user.id,
-      website_url: params[:website_url],
-      image_url: params[:image_url],
-      details: params[:details],
-      price: params[:price]
-    )
-    if @vendor.save
-      render "show.json.jb"
-    else
-      render json: { errors: @vendor.errors.full_messages }, status: :bad_request
-    end
+    response = Cloudinary::Uploader.upload(params[:image_file])
+    cloudinary_url = response["secure_url"]
+    # if current_user.vendor == true
+      @vendor = Vendor.new(
+        name: params[:name],
+        category_id: params[:category_id],
+        zip_code: params[:zip_code],
+        user_id: current_user.id,
+        website_url: params[:website_url],
+        image_url: cloudinary_url,
+        details: params[:details],
+        price: params[:price]
+      )
+      if @vendor.save
+        render "show.json.jb"
+      else
+        render json: { errors: @vendor.errors.full_messages }, status: :bad_request
+      end
+    # end
+    
   end
 
   def update
     @vendor = Vendor.find_by(id: params[:id])
-    @vendor.name = params[:name] || @vendor.name
-    @vendor.category_id = params[:category_id] || @vendor.category_id
-    @vendor.zip_code = params[:zip_code] || @vendor.zip_code
-    @vendor.website_url = params[:website_url] || @vendor.website_url
-    @vendor.image_url = params[:image_url] || @vendor.image_url
-    @vendor.details = params[:details] || @vendor.details
-    @vendor.price = params[:price] || @vendor.price
+    if @vendor.user_id == current_user.id
+      @vendor.name = params[:name] || @vendor.name
+      @vendor.category_id = params[:category_id] || @vendor.category_id
+      @vendor.zip_code = params[:zip_code] || @vendor.zip_code
+      @vendor.website_url = params[:website_url] || @vendor.website_url
+      @vendor.details = params[:details] || @vendor.details
+      @vendor.price = params[:price] || @vendor.price
 
-    if @vendor.save
-      render "show.json.jb"
-    else
-      render json: {errors: @vendor.errors.full_messages}, status: :unprocessable_entity
+      response = Cloudinary::Uploader.upload(params[:image_url])
+      cloudinary_url = response["secure_url"]
+      @vendor.image_url = cloudinary_url || @vendor.image_url
+
+      if @vendor.save
+        render "show.json.jb"
+      else
+        render json: {errors: @vendor.errors.full_messages}, status: :unprocessable_entity
+      end
     end
   end
 
   def destroy
     @vendor = Vendor.find_by(id: params[:id])
-    @vendor.destroy
+    if @vendor.user_id == current_user.id
+      @vendor.destroy
 
-    render json: {message: "Vendor successfully deleted!"}
+      render json: {message: "Vendor successfully deleted!"}
+    end
   end
 
 

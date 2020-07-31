@@ -14,7 +14,7 @@ class Api::VendorPartiesController < ApplicationController
   end
 
   def destroy
-    @vendor_party = VendorParty.find_by(id: params[:id])
+    @vendor_party = VendorParty.find_by(vendor_id: params[:vendor_id], party_id: params[:party_id])
     @vendor_party.destroy
 
     render json: {message: "Vendor Party has been deleted!"}

@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
     post "/vendor_parties" => "vendor_parties#create"
     get "/vendor_parties" => "vendor_parties#show"
-    delete "/vendor_parties/:id" => "vendor_parties#destroy"
+    delete "/vendor_parties" => "vendor_parties#destroy"
 
     get "/categories" => "categories#index"
     post "/categories" => "categories#create"

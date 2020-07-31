@@ -16,10 +16,13 @@ class Api::PartiesController < ApplicationController
   end
 
   def create
+    response = Cloudinary::Uploader.upload(params[:image_file])
+    cloudinary_url = response["secure_url"]
     @party = Party.new(
       budget: params[:budget],
       occasion: params[:occasion],
-      user: current_user
+      image_url: cloudinary_url,
+      user: current_user,
     )
     if @party.save
       render "show.json.jb"
@@ -33,6 +36,10 @@ class Api::PartiesController < ApplicationController
     if @party.user_id == current_user.id
       @party.budget = params[:budget] || @party.budget
       @party.occasion = params[:occasion] || @party.occasion
+
+      response = Cloudinary::Uploader.upload(params[:image_url])
+      cloudinary_url = response["secure_url"]
+      @party.image_url = cloudinary_url || @party.image_url
     
       if @party.save
         render "show.json.jb"

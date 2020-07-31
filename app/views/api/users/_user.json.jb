@@ -3,5 +3,7 @@
   first_name: user.first_name,
   last_name: user.last_name,
   email: user.email,
-  vendor: user.vendor
+  image_url: user.image_url,
+  vendor: user.vendor,
+  # vendors: user.parties
 }
