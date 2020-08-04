@@ -1,9 +1,9 @@
 vendor = render partial: "vendor.json.jb",
 locals: { vendor: @vendor}
 
-# vendor[:user_parties] = current_user.parties.map do |party|
-#   render partial: "api/parties/party.json.jb", locals: {party: party}
-# end
+vendor[:user_parties] = current_user.parties.map do |party|
+  render partial: "api/parties/party.json.jb", locals: {party: party}
+end
 vendor[:vendor_parties] = @vendor.vendor_parties.map do |vendor_party|
   render partial: "api/vendor_parties/vendor_party.json.jb", locals: {vendor_party: vendor_party}
 end
