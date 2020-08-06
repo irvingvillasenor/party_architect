@@ -4,7 +4,7 @@ class User < ApplicationRecord
   validates :first_name, length: {minimum: 2}, presence: true
   validates :last_name, length: {minimum: 2}, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :image_url, presence: true
+  # validates :image_url, presence: true
 
 
   has_many :vendors, dependent: :destroy
